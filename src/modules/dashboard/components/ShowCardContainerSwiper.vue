@@ -1,5 +1,7 @@
 <template>
-  <div ref="container" class="swiper-container">
+  <div
+    ref="container"
+    class="swiper-container">
     <swiper-container
       v-if="firstTimeInView"
       :space-between="20"

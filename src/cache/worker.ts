@@ -11,7 +11,6 @@ onmessage = async (event) => {
 };
 
 async function replaceData(data: SimpleShow[] ) {
-  console.log(JSON.stringify(data));
   // Get handle to draft file
   const root = await navigator.storage.getDirectory();
   const draftHandle = await root.getFileHandle("shows.cache", { create: true });
@@ -55,7 +54,7 @@ async function getData() {
 
     reader.onload = function() {
       const result = reader.result?.toString();
-      console.log(result);
+
       postMessage({
         code: 'read',
         status: 'complete',
@@ -64,10 +63,13 @@ async function getData() {
     };
 
     reader.onerror = function() {
-      console.log(reader.error);
+      postMessage({
+        code: 'read',
+        status: 'error',
+        data: [],
+      });
     };
   } catch (e) {
-    console.log(e);
     postMessage({
       code: 'read',
       status: 'error',

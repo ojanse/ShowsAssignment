@@ -15,7 +15,6 @@ export async function getCachedShows(): Promise<SimpleShow[]> {
         command: 'read',
       });
     } catch (e) {
-      console.log('error');
       opfsWorker.terminate();
       reject(e);
     }

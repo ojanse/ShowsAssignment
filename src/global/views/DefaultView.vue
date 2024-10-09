@@ -3,7 +3,9 @@
     <div class="gradient-wrapper">
       <div class="backdrop-gradient" />
     </div>
-    <TheHeader class="header" />
+    <TheHeader
+      class="header"
+      :class="{ 'opaque': isScrolledDown }" />
     <TheMain class="main">
       <router-view />
     </TheMain>
@@ -13,6 +15,11 @@
 <script setup lang="ts">
 import TheHeader from "@/global/layout/TheHeader.vue";
 import TheMain from "@/global/layout/TheMain.vue";
+import {useWindowScroll} from "@vueuse/core";
+import {computed} from "vue";
+
+const { y } = useWindowScroll();
+const isScrolledDown = computed(() => y.value > 40);
 </script>
 
 <style scoped>
@@ -43,6 +50,12 @@ import TheMain from "@/global/layout/TheMain.vue";
   position: fixed;
   top: 0;
   height: 60px;
+  z-index: 2;
+}
+
+.header.opaque {
+  background-color: rgba(0, 0, 0, 0.9);
+  box-shadow: rgba(0,0,0,0.2) 0 1px 3px 0;
 }
 
 .main {

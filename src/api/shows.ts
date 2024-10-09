@@ -24,6 +24,11 @@ export interface Show extends SimpleShow {
   summary: string;
 }
 
+export interface ShowSearchResult extends SimpleShow {
+  score: number,
+  show: Show,
+}
+
 export class FetchError extends Error {
   status: number;
 
@@ -60,8 +65,20 @@ async function getShowById(showId: string) {
   return result;
 }
 
+async function getShowByQuery(query: string) {
+  const response = await fetch(`https://api.tvmaze.com/search/shows?q=${query}`);
+  if (!response.ok) {
+    throw new FetchError(`Response status: ${response.status}`, response.status);
+  }
+
+  const result: ShowSearchResult[] = await response.json();
+
+  return result;
+}
+
 export {
   getShowsByPage,
   getShowById,
+  getShowByQuery,
 };
 

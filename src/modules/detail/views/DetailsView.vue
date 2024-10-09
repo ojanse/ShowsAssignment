@@ -2,11 +2,9 @@
   <div
     v-if="show"
     class="show-details-view">
-    <BaseLink
-      class="back-link"
-      :to="{ name: 'dashboard' }">
-      < Back to dashboard
-    </BaseLink>
+    <BackLink :to="{ name: 'dashboard' }">
+      Back to dashboard
+    </BackLink>
     <div class="introduction">
       <ShowThumbnail
         :show="show"
@@ -16,6 +14,7 @@
           {{ show.name }}
         </h2>
       </BaseTitle>
+      <ShowRating :show="show" />
       <BaseText>
         <p>
           {{ stripHtml(show.summary) }}
@@ -67,6 +66,8 @@
   import BaseList from "@/global/components/BaseList.vue";
   import BaseListItem from "@/global/components/BaseListItem.vue";
   import BaseLink from "@/global/components/BaseLink.vue";
+  import ShowRating from "@/global/components/ShowRating.vue";
+  import BackLink from "@/global/components/BackLink.vue";
 
   const route = useRoute();
   const show = ref<Show | undefined>(undefined);

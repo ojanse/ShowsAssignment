@@ -12,7 +12,10 @@
 import {computed} from "vue";
 
 interface Props {
-  to?: { name: string },
+  to?: {
+    name: string,
+    params?: Record<string, string | number | boolean>,
+  },
   href?: string;
 }
 
@@ -28,6 +31,7 @@ const componentIs = computed(
 
 <style scoped>
   .link {
+    display: block;
     color: var(--color-text);
     font-family: var(--font-indivisible);
   }

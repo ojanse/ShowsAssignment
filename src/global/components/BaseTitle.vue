@@ -49,6 +49,6 @@ const { noMargin = false } = defineProps<Props>();
   :slotted(h4) {
     font-size: 16px;
     line-height: 20px;
-    font-weight: 400;
+    font-weight: 500;
   }
 </style>
