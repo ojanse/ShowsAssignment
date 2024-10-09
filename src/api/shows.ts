@@ -39,17 +39,29 @@ async function getShowsByPage(page: number) {
     throw Error('Page cannot be a negative number');
   }
 
-  let result: Show[] = [];
   const response = await fetch(`https://api.tvmaze.com/shows?page=${page}`);
   if (!response.ok) {
     throw new FetchError(`Response status: ${response.status}`, response.status);
   }
 
-  result = await response.json();
+  const result: Show[] = await response.json();
+
+  return result;
+}
+
+async function getShowById(showId: string) {
+  const response = await fetch(`https://api.tvmaze.com/shows/${showId}`);
+  if (!response.ok) {
+    throw new FetchError(`Response status: ${response.status}`, response.status);
+  }
+
+  const result: Show = await response.json();
 
   return result;
 }
 
 export {
   getShowsByPage,
+  getShowById,
 };
+

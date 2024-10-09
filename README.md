@@ -73,7 +73,8 @@ These are the tools I chose to use for this assignment:
 * **1:40:** Found out the IndexedDB solution was too slow on Chrome. Converted the storage method to using the FileSystemAPI through a webworker.
 * **3:20:** Add the basic layout, css variables.
 * **3:40:** Add genre filtes in the shows store, implement swiper.js, show the shows sorted on the dashboard.
-* **4:30:** 
+* **4:40:** Create detail page with some basic information
+* **5:20:** 
 
 
 ## Reflection

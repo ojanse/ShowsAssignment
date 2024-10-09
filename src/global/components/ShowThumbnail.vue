@@ -1,8 +1,8 @@
 <template>
-  <figure>
+  <figure class="show-thumbnail">
     <img
       v-if="show.image"
-      :src="show.image?.medium"
+      :src="validatedImgSrc"
       :alt="show.name"
       :title="show.name">
     <div
@@ -14,12 +14,21 @@
 
 <script setup lang="ts">
 import type {SimpleShow} from "@/api/shows";
+import {computed} from "vue";
 
 interface Props {
   show: SimpleShow;
+  quality?: string, // Should validate this, but let's just use a computed for now
 }
 
-const { show } = defineProps<Props>();
+const validatedImgSrc = computed(
+  () => {
+    if (quality === 'original') return show.image?.original;
+    return show.image?.medium;
+  }
+);
+
+const { show, quality = 'medium' } = defineProps<Props>();
 </script>
 
 <style scoped>

@@ -2,21 +2,29 @@
   <component
     :is="tag"
     class="show-card">
-    <ShowThumbnail
-      class="thumbnail"
-      :show="show">
-      <div class="rating">
-        <div class="icon">
-          <IconStar />
+    <router-link
+      :to="{ 
+        name: 'show-details',
+        params: {
+          showId: show.id,
+        },
+      }">
+      <ShowThumbnail
+        class="thumbnail"
+        :show="show">
+        <div class="rating">
+          <div class="icon">
+            <IconStar />
+          </div>
+          {{ formattedRating }}
         </div>
-        {{ formattedRating }}
-      </div>
-    </ShowThumbnail>
-    <BaseTitle
-      class="card-title"
-      no-margin>
-      <h4>{{ show.name }}</h4>
-    </BaseTitle>
+      </ShowThumbnail>
+      <BaseTitle
+        class="card-title"
+        no-margin>
+        <h4>{{ show.name }}</h4>
+      </BaseTitle>
+    </router-link>
   </component>
 </template>
 
@@ -39,7 +47,7 @@ const formattedRating = computed(
     if (!show.rating.average) return '??';
     return (Math.round(show.rating.average * 100) / 100).toFixed(1);
   }
-)
+);
 </script>
 
 <style scoped>
