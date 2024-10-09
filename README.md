@@ -15,7 +15,8 @@ endpoint that allows for filtering genre and sort by rating. I
 simply need all data in order to know if I have all genres, 
 and to show the actual highest rated show up front. This means
 I will need to create a local cache of the data through the show
-index endpoint.
+index endpoint. Seeing as this will take some time, a loading view
+is probably needed.
 
 ### Layout
 
@@ -54,6 +55,7 @@ the cards as a grid.
 - A gradient background that changes color when on the detail view based on the average color of the thumbnail
 - An option on the dashboard for the user to choose their sorting method
 - An "all shows" button for each genre that goes to a page with an infinite/virtual scroll show grid.
+- Show on what networks the tv show can be watched, and maybe allow filtering per network app-wide.
 
 ## Stack choice
 
@@ -64,6 +66,9 @@ These are the tools I chose to use for this assignment:
 * **Plain css**: While SASS or PostCSS would give some benefits, I don't see big styling challenges that would require the extra package.
 * **Swiper.js**: For horizontal scrollable cards on the dashboard
 
-## Time spent
+## Time log
 
-* **30 min:** Setup the project and write the approach in this document.
+* **0:00:** Set up the project and writing the approach in this document.
+* **0:40:** Create a local cache of all shows using IndexedDB, that only attempts to retrieve new pages on concurrent visits.
+* **1:40:** Found out the IndexedDB solution was too slow on Chrome. Converted the storage method to using the FileSystemAPI through a webworker.
+* **3:10:** 
