@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {FetchError, getShowsByPage, type SimpleShow} from "@/api/shows";
 import {showToSimpleShow} from "@/utils";
-import {reactive, ref, toRaw} from "vue";
+import {computed, reactive, ref, toRaw} from "vue";
 import {getCachedShows, updateCachedShows} from "@/cache";
 
 export const SHOWS_LOAD_STATE = Object.freeze({
@@ -15,7 +15,54 @@ export const useShowStore = defineStore('show', () => {
   const stateShowIds = ref<number[]>([]);
   const loadState = ref(SHOWS_LOAD_STATE.init); // init -> loading -> ready
 
-  function addShows(shows: SimpleShow[]) {
+  // We don't want to iterate over all shows for each genre. Instead, we create a helper computed,
+  // that returns a mapping between genre and show ids. This to not make a huge object without reason.
+  const showIdsByGenre = computed(
+    () => {
+      return stateShowIds.value.reduce<Record<string, number[]>>(
+        (result, currentShowId) => {
+        // A show can have multiple genre, so its id needs to be added to each genre in the result
+        stateShows[currentShowId].genres.forEach(
+          (genre) => {
+            // Add the genre as an object key if it doesn't exist
+            if (!Object.keys(result).includes(genre)) {
+              result[genre] = [];
+            }
+            result[genre].push(currentShowId);
+          },
+        );
+        return result;
+      }, {});
+    }
+  );
+
+  // To get all genres we can simply return the keys of the showIds by genre
+  const allGenres = computed(() => Object.keys(showIdsByGenre.value));
+
+  function getShowsByGenre(
+    genreFilter: string,
+    sortFn: (a: SimpleShow, b: SimpleShow) => number,
+    amount: number = 25,
+  ) {
+    const genreShowIds = showIdsByGenre.value[genreFilter];
+
+    // Make sure it was a valid genre
+    if (!genreShowIds) {
+      return [];
+    }
+
+    const genreShows = genreShowIds.map((showId) => stateShows[showId]);
+
+    if (typeof sortFn === 'function') {
+      genreShows.sort(sortFn);
+    }
+
+    return genreShows.slice(0, amount);
+  }
+
+  // Below section all has to do with loading of the shows into the cache and state
+
+  function addShowsToState(shows: SimpleShow[]) {
     shows.forEach((show) => {
       stateShows[show.id] = show;
     });
@@ -27,7 +74,7 @@ export const useShowStore = defineStore('show', () => {
 
   async function fillShowsFromCache() {
     const showsInCache = await getCachedShows();
-    addShows(showsInCache);
+    addShowsToState(showsInCache);
     updateStateShowIds();
   }
 
@@ -48,7 +95,7 @@ export const useShowStore = defineStore('show', () => {
         // Add each retrieved show to the database, or update the database
         // if it already exists
         const simpleShows = nextShows.map((show) => showToSimpleShow(show));
-        addShows(simpleShows);
+        addShowsToState(simpleShows);
 
         // Try to get the next page
         nextPage += 1;
@@ -74,5 +121,7 @@ export const useShowStore = defineStore('show', () => {
   return {
     loadShows,
     loadState,
+    allGenres,
+    getShowsByGenre,
   };
 });

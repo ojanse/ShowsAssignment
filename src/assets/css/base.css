@@ -11,6 +11,9 @@
 
   /* Typefaces */
   --font-indivisible: 'Rubik', Verdana, Geneva, sans-serif;
+
+  /* Swiper */
+  --swiper-navigation-color: var(--c-white);
 }
 
 :root {

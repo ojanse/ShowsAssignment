@@ -71,4 +71,13 @@ These are the tools I chose to use for this assignment:
 * **0:00:** Set up the project and writing the approach in this document.
 * **0:40:** Create a local cache of all shows using IndexedDB, that only attempts to retrieve new pages on concurrent visits.
 * **1:40:** Found out the IndexedDB solution was too slow on Chrome. Converted the storage method to using the FileSystemAPI through a webworker.
-* **3:10:** 
+* **3:20:** Add the basic layout, css variables.
+* **3:40:** Add genre filtes in the shows store, implement swiper.js, show the shows sorted on the dashboard.
+* **4:30:** 
+
+
+## Reflection
+
+A few points
+
+* Calling things 'show' might not have been the smartest decision. tvShow or similar would have spared some confusion.
