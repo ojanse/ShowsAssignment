@@ -1,0 +1,17 @@
+services:
+  frontend:
+    build:
+      context: .
+    tty: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/app/src
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./package.json:/app/package.json
+      - ./yarn.lock:/app/yarn.lock
+      - ./.yarnrc.yml:/app/.yarnrc.yml
+      - ./.yarn:/app/.yarn
+      - ./public:/app/public
+    command: yarn dev --port=8080 --host

@@ -11,17 +11,15 @@ onmessage = async (event) => {
 };
 
 async function replaceData(data: SimpleShow[] ) {
-  // Get handle to draft file
   const root = await navigator.storage.getDirectory();
-  const draftHandle = await root.getFileHandle("shows.cache", { create: true });
-  // Get sync access handle
-  const accessHandle = await draftHandle.createSyncAccessHandle();
+  const fileHandle = await root.getFileHandle("shows.cache", { create: true });
+
+  const syncAccessHandle = await fileHandle.createSyncAccessHandle();
   const encoder = new TextEncoder();
   const encodedData = encoder.encode(JSON.stringify(data));
-  await accessHandle.write(encodedData);
+  await syncAccessHandle.write(encodedData);
 
-  // Always close FileSystemSyncAccessHandle if done.
-  accessHandle.close();
+  syncAccessHandle.close();
 
   postMessage({
     code: 'write',
@@ -30,25 +28,23 @@ async function replaceData(data: SimpleShow[] ) {
 }
 
 async function clearFile() {
-  // Get handle to draft file
   const root = await navigator.storage.getDirectory();
-  const draftHandle = await root.getFileHandle("shows.cache", { create: true });
-  // Get sync access handle
-  const accessHandle = await draftHandle.createSyncAccessHandle();
+  const fileHandle = await root.getFileHandle("shows.cache", { create: true });
+
+  const syncAccessHandle = await fileHandle.createSyncAccessHandle();
   const encoder = new TextEncoder();
   const encodedData = encoder.encode('');
-  await accessHandle.write(encodedData);
+  await syncAccessHandle.write(encodedData);
 
-  // Always close FileSystemSyncAccessHandle if done.
-  accessHandle.close();
+  syncAccessHandle.close();
 }
 
 async function getData() {
   const root = await navigator.storage.getDirectory();
   try {
-    const draftHandle = await root.getFileHandle("shows.cache");
+    const fileHandle = await root.getFileHandle("shows.cache");
 
-    const file = await draftHandle.getFile();
+    const file = await fileHandle.getFile();
     const reader = new FileReader();
     reader.readAsText(file);
 

@@ -12,7 +12,7 @@ vi.mock('@/cache', () => ({
       rating: {
         average: 5.6,
       },
-      image: null,
+      image: { original: '', medium: '' },
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ vi.mock('@/cache', () => ({
       rating: {
         average: 2.6,
       },
-      image: null,
+      image: { original: '', medium: '' },
     },
   ])),
   updateCachedShows: vi.fn(),
@@ -38,7 +38,7 @@ vi.mock('@/api/shows', () => ({
           rating: {
             average: 9.1,
           },
-          image: null,
+          image: { original: '', medium: '' },
         },
         {
           id: 4,
@@ -47,7 +47,7 @@ vi.mock('@/api/shows', () => ({
           rating: {
             average: 7.5,
           },
-          image: null,
+          image: { original: '', medium: '' },
         },
       ]);
     } else {

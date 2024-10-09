@@ -1,37 +1,37 @@
 import type {SimpleShow} from "@/api/shows";
 
 export async function getCachedShows(): Promise<SimpleShow[]> {
-  const opfsWorker = new Worker(new URL('@/cache/worker.ts', import.meta.url));
+  const worker = new Worker(new URL('@/cache/worker.ts', import.meta.url));
   return new Promise((resolve, reject) => {
     try {
-      opfsWorker.addEventListener('message', (response) => {
+      worker.addEventListener('message', (response) => {
         if (response.data.code === 'read') {
           const result = response.data.data as SimpleShow[];
-          opfsWorker.terminate();
+          worker.terminate();
           resolve(result);
         }
       });
-      opfsWorker.postMessage({
+      worker.postMessage({
         command: 'read',
       });
     } catch (e) {
-      opfsWorker.terminate();
+      worker.terminate();
       reject(e);
     }
   });
 }
 
 export async function updateCachedShows(shows: SimpleShow[]) {
-  const opfsWorker = new Worker(new URL('@/cache/worker.ts', import.meta.url));
+  const worker = new Worker(new URL('@/cache/worker.ts', import.meta.url));
 
-  opfsWorker.postMessage({
+  worker.postMessage({
     command: 'write',
     data: shows,
   });
 
-  opfsWorker.addEventListener('message', (response) => {
+  worker.addEventListener('message', (response) => {
     if (response.data.code === 'write' && response.data.status === 'complete') {
-      opfsWorker.terminate();
+      worker.terminate();
     }
   });
 }
