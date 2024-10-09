@@ -1,11 +1,52 @@
 <template>
-  <div />
+  <div class="page-container">
+    <div class="gradient-wrapper">
+      <div class="backdrop-gradient" />
+    </div>
+    <TheHeader class="header" />
+    <TheMain class="main">
+      <router-view />
+    </TheMain>
+  </div>
 </template>
 
 <script setup lang="ts">
-
+import TheHeader from "@/global/layout/TheHeader.vue";
+import TheMain from "@/global/layout/TheMain.vue";
 </script>
 
 <style scoped>
+.page-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px;
+  min-height: 100vh;
+  background: var(--color-background);
+}
 
+.gradient-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.backdrop-gradient {
+  position: absolute;
+  width: clamp(400px, 100%, 1000px);
+  padding-top: 100%;
+  height: 0;
+  background: transparent;
+  background: radial-gradient(at -200px -200px, var(--color-background-gradient) 0%, transparent 70%);
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  height: 60px;
+}
+
+.main {
+  flex: 1 0 auto;
+  padding-top: 20px;
+}
 </style>
