@@ -29,13 +29,13 @@ const { noMargin = false } = defineProps<Props>();
   }
 
   :slotted(h1) {
-    font-size: 35px;
+    font-size: 39px;
     line-height: 40px;
     font-weight: 700;
   }
 
   :slotted(h2) {
-    font-size: 28px;
+    font-size: 27px;
     line-height: 30px;
     font-weight: 700;
   }
@@ -49,6 +49,6 @@ const { noMargin = false } = defineProps<Props>();
   :slotted(h4) {
     font-size: 16px;
     line-height: 20px;
-    font-weight: 500;
+    font-weight: 400;
   }
 </style>

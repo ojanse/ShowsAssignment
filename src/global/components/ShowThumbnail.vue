@@ -8,6 +8,7 @@
     <div
       v-else
       :title="show.name" />
+    <slot />
   </figure>
 </template>
 
