@@ -50,7 +50,7 @@ const { show, tag = 'div' } = defineProps<Props>();
 }
 
 .card-title {
-  margin-top: 5px;
+  margin-top: 8px;
 }
 
 .thumbnail:hover {

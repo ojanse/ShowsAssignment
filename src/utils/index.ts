@@ -9,3 +9,7 @@ export function showToSimpleShow(show: Show): SimpleShow {
     image: show.image,
   };
 }
+
+export function strictDecimals(num: number, decimals: number) {
+  return (Math.round(num * 100) / 100).toFixed(decimals);
+}

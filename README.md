@@ -72,13 +72,24 @@ These are the tools I chose to use for this assignment:
 * **0:40:** Create a local cache of all shows using IndexedDB, that only attempts to retrieve new pages on concurrent visits.
 * **1:40:** Found out the IndexedDB solution was too slow on Chrome. Converted the storage method to using the FileSystemAPI through a webworker.
 * **3:20:** Add the basic layout, css variables.
-* **3:40:** Add genre filtes in the shows store, implement swiper.js, show the shows sorted on the dashboard.
+* **3:40:** Add genre filters in the shows store, implement swiper.js, show the shows sorted on the dashboard.
 * **4:40:** Create detail page with some basic information. Get the data from the API, as our cache only contains a simplified version to reduce storage.
 * **5:20:** Create search page, add simple search bar to the header.
+* **6:00:** Create tests, polish up some code here and there.
+* **7:00:** Finish
 
 
 ## Reflection
 
-A few points
+Polish points
+
+* The way I set the view height isn't ideal, creates scrollbars on mobile devices.
+* The navigation arrows on the swiper lists aren't aligned properly across all the breakpoints
+* Breakpoints could be defined with variables, and used more consistently.
+* Typography would work better as a sass/postcss mixin.
+* The card containers really need some loading skeletons
+* Show pinia store tests are reliant on the load function. Would be better to allow testing them individually, which would also improve the code.
+
+Other thoughts
 
 * Calling things 'show' might not have been the smartest decision. tvShow or similar would have spared some confusion.

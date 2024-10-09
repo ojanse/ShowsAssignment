@@ -11,6 +11,7 @@
 import IconStar from "@/global/icons/IconStar.vue";
 import type {SimpleShow} from "@/api/shows";
 import {computed} from "vue";
+import {strictDecimals} from "@/utils";
 
 interface Props {
   show: SimpleShow,
@@ -21,7 +22,7 @@ const { show } = defineProps<Props>();
 const formattedRating = computed(
   () => {
     if (!show.rating.average) return '??';
-    return (Math.round(show.rating.average * 100) / 100).toFixed(1);
+    return strictDecimals(show.rating.average, 1);
   }
 );
 </script>

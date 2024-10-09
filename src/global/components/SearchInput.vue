@@ -19,6 +19,7 @@ const model = defineModel<string>();
 }
 
 input {
+  width: 100%;
   padding-left: 30px;
   font-family: var(--font-indivisible);
   color: var(--color-background);

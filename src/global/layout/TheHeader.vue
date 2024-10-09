@@ -48,5 +48,6 @@ function handleSearchSubmit() {
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
+  gap: 40px;
 }
 </style>

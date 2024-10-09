@@ -14,6 +14,7 @@ export const useShowStore = defineStore('show', () => {
   const stateShows = reactive<Record<number, SimpleShow>>({});
   const stateShowIds = ref<number[]>([]);
   const loadState = ref(SHOWS_LOAD_STATE.init); // init -> loading -> ready
+  const loadingPage = ref(0);
 
   // We don't want to iterate over all shows for each genre. Instead, we create a helper computed,
   // that returns a mapping between genre and show ids. This to not make a huge object without reason.
@@ -90,6 +91,7 @@ export const useShowStore = defineStore('show', () => {
 
     let nextPage = Math.floor(highestShowId / 250); // The api returns max 250 shows
     try {
+      loadingPage.value = nextPage;
       let nextShows = await getShowsByPage(nextPage);
       while (nextShows.length > 0) {
         // Add each retrieved show to the database, or update the database
@@ -99,6 +101,7 @@ export const useShowStore = defineStore('show', () => {
 
         // Try to get the next page
         nextPage += 1;
+        loadingPage.value = nextPage;
         nextShows = await getShowsByPage(nextPage);
       }
     } catch (e) {
@@ -119,8 +122,11 @@ export const useShowStore = defineStore('show', () => {
   }
 
   return {
+    allShows: stateShows,
+    allShowIds: stateShowIds,
     loadShows,
     loadState,
+    loadingPage,
     allGenres,
     getShowsByGenre,
   };

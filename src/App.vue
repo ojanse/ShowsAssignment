@@ -1,10 +1,12 @@
 <template>
-  <router-view />
+  <router-view v-if="showStore.loadState === SHOWS_LOAD_STATE.ready" />
+  <LoadingView v-else />
 </template>
 
 
 <script setup lang="ts">
-import {useShowStore} from "@/stores/show";
+import {SHOWS_LOAD_STATE, useShowStore} from "@/stores/show";
+import LoadingView from "@/global/views/LoadingView.vue";
 
 const showStore = useShowStore();
 
