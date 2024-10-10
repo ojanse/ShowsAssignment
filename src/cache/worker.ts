@@ -10,16 +10,17 @@ onmessage = async (event) => {
   }
 };
 
+interface FileSystemFileHandleWithSyncAccess extends FileSystemFileHandle {
+  createWritable: () => Promise<any>;
+}
+
 async function replaceData(data: SimpleShow[] ) {
   const root = await navigator.storage.getDirectory();
-  const fileHandle = await root.getFileHandle("shows.cache", { create: true });
+  const fileHandle = await root.getFileHandle("shows.cache", { create: true }) as FileSystemFileHandleWithSyncAccess;
 
-  const syncAccessHandle = await fileHandle.createSyncAccessHandle();
-  const encoder = new TextEncoder();
-  const encodedData = encoder.encode(JSON.stringify(data));
-  await syncAccessHandle.write(encodedData);
-
-  syncAccessHandle.close();
+  const writable = await fileHandle.createWritable();
+  await writable.write(JSON.stringify(data));
+  await writable.close();
 
   postMessage({
     code: 'write',
@@ -29,14 +30,16 @@ async function replaceData(data: SimpleShow[] ) {
 
 async function clearFile() {
   const root = await navigator.storage.getDirectory();
-  const fileHandle = await root.getFileHandle("shows.cache", { create: true });
+  const fileHandle = await root.getFileHandle("shows.cache", { create: true }) as FileSystemFileHandleWithSyncAccess;
 
-  const syncAccessHandle = await fileHandle.createSyncAccessHandle();
-  const encoder = new TextEncoder();
-  const encodedData = encoder.encode('');
-  await syncAccessHandle.write(encodedData);
+  const writable = await fileHandle.createWritable();
+  await writable.write('');
+  await writable.close();
 
-  syncAccessHandle.close();
+  postMessage({
+    code: 'clear',
+    status: 'complete',
+  });
 }
 
 async function getData() {

@@ -5,7 +5,7 @@
     </BaseTitle>
     <BaseText v-if="showStore.loadingPage > 0">
       <p>
-        Fetching page: 
+        Fetching page:
         <span class="page-number">
           {{ showStore.loadingPage }}
         </span>

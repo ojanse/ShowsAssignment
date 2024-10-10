@@ -8,3 +8,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Always keep the scrollbar to keep the page from resizing when switching views */
+body {
+  overflow-y: scroll;
+}

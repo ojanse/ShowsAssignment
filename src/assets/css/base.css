@@ -6,8 +6,10 @@
   --c-yellow: #FFB703;
   --c-orange: #FB8500;
 
+  --c-transparent-white: rgba(242, 242, 242, 0.95);
+  --c-transparent-black: rgba(2, 48, 71, 0.95);
   --c-transparent-green: rgba(125, 153, 0, 0.4);
-  --c-transparent-blue: rgba(125, 0, 153, 0.4);
+  --c-transparent-blue: rgba(0, 0, 153, 0.4);
 
   /* Typefaces */
   --font-indivisible: 'Rubik', Verdana, Geneva, sans-serif;
@@ -24,6 +26,7 @@
 
   --color-text: var(--c-white);
   --color-text-in-action: var(--c-white);
+  --color-background-transparent: var(--c-transparent-black);
   --color-background-gradient: var(--c-transparent-green);
 }
 
@@ -36,6 +39,7 @@
 
     --color-text: var(--c-black);
     --color-text-in-action: var(--c-black);
+    --color-background-transparent: var(--c-transparent-white);
     --color-background-gradient: var(--c-transparent-blue);
   }
 }

@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {FetchError, getShowsByPage, type SimpleShow} from "@/api/shows";
 import {showToSimpleShow} from "@/utils";
 import {computed, reactive, ref, toRaw} from "vue";
-import {getCachedShows, updateCachedShows} from "@/cache";
+import {clearCachedShows, getCachedShows, updateCachedShows} from "@/cache";
 
 export const SHOWS_LOAD_STATE = Object.freeze({
   init: 'load_state_init',
@@ -79,6 +79,11 @@ export const useShowStore = defineStore('show', () => {
     updateStateShowIds();
   }
 
+  // For dev purposes, allows clearing the cache of shows, so that it can be filled again
+  async function clearShows() {
+    return clearCachedShows();
+  }
+
   // Updates the shows database based on the last show id that exists within it
   async function loadShows() {
     loadState.value = SHOWS_LOAD_STATE.loading;
@@ -129,5 +134,6 @@ export const useShowStore = defineStore('show', () => {
     loadingPage,
     allGenres,
     getShowsByGenre,
+    clearShows,
   };
 });

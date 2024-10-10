@@ -7,14 +7,20 @@
 <script setup lang="ts">
 import {SHOWS_LOAD_STATE, useShowStore} from "@/stores/show";
 import LoadingView from "@/global/views/LoadingView.vue";
+import {useRoute, useRouter} from "vue-router";
+import {onMounted} from "vue";
 
+const route = useRoute();
+const router = useRouter();
 const showStore = useShowStore();
 
-async function init() {
+onMounted(async () => {
+  await router.isReady();
+  if (route.query?.action === 'clear-cache') {
+    await showStore.clearShows();
+  }
   await showStore.loadShows();
-}
-
-init();
+});
 
 </script>
 

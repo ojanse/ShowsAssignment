@@ -38,7 +38,7 @@ const isScrolledDown = computed(() => y.value > 40);
 }
 
 .backdrop-gradient {
-  position: absolute;
+  position: fixed;
   width: clamp(400px, 100%, 1000px);
   padding-top: 100%;
   height: 0;
@@ -54,8 +54,9 @@ const isScrolledDown = computed(() => y.value > 40);
 }
 
 .header.opaque {
-  background-color: rgba(0, 0, 0, 0.9);
-  box-shadow: rgba(0,0,0,0.2) 0 1px 3px 0;
+  background-color: var(--color-background-transparent);
+  box-shadow: rgba(0,0,0,0.2) 0 2px 3px 0;
+  backdrop-filter: blur(2px);
 }
 
 .main {
